@@ -1,4 +1,4 @@
-# Sustainabot body
+# Sustainabot controller app
 Sustainabot's Android app allows you to configure the device's parameters and command it to draw images and diagrams.
 
 The current version is configured to connect to a pre-set list of Sustainabot devices (by Bluetooth MAC address) for ease of use. Before running the application, set your own device IDs in [DeviceListActivity.java](app/src/main/java/app/akexorcist/bluetoothspp/library/DeviceListActivity.java). Alternatively, remove the MAC address checking in the `BroadcastReceiver` of the same file to display all available devices.
