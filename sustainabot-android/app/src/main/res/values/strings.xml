@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Sustainabot</string>
+	<string name="searching_for_sustainabots">Searching for nearby Sustainabots…</string>
+	<string name="title_device_list_activity">Connect to a Sustainabot</string>
+	<string name="title_image_activity">Import an image</string>
+
+	<string name="hint_enable_bluetooth">Sustainabot needs Bluetooth to be enabled so it can connect to your Sustainabot</string>
+	<string name="hint_retry">Retry</string>
+	<string name="hint_default_sustainabot">Sustainabot %1$d set as the default</string>
+	<string name="hint_connect_device">Connect now</string>
+
+	<string name="hint_location_storage_permission">Sustainabot needs location and storage permission to be able to control nearby Sustainabots</string>
+
+	<string name="no_sustainabots_found">No nearby Sustainabots found</string>
+	<string name="no_media_found">No media found</string>
+
+	<plurals name="number_sustainabots_found">
+		<item quantity="one">%d nearby Sustainabot found</item>
+		<item quantity="other">%d nearby Sustainabots found</item>
+	</plurals>
+
+	<string name="sending">Sending your picture</string>
+	<string name="sending_picture_to_sustainabot">Sending to your Sustainabot – please wait</string>
+	<string name="size_small">Small</string>
+	<string name="size_large">Large</string>
+
+	<string name="hint_refresh">Refresh</string>
+	<string name="hint_unblock">Unblock</string>
+	<string name="hint_connecting">Connecting…\n\n(Password: 1234)</string>
+	<string name="hint_connected">Sustainabot connected%1$s</string>
+	<string name="hint_use_heading">Mode: Use heading</string>
+	<string name="hint_build_command_list">Mode: Build command list</string>
+	<string name="hint_send_commands_immediately">Mode: Send commands immediately</string>
+	<string name="hint_use_offset">Offset</string>
+	<string name="hint_move_sustainabot_forward">Move Sustainabot forward by movement step</string>
+	<string name="hint_move_sustainabot_backward">Move Sustainabot backward by movement step</string>
+	<string name="hint_turn_sustainabot_left">Turn Sustainabot left by rotation step</string>
+	<string name="hint_turn_sustainabot_right">Turn Sustainabot right by rotation step</string>
+	<string name="hint_movement_step">Movement step:</string>
+	<string name="hint_rotation_step">Rotation step:</string>
+	<string name="hint_calibrate_compass">Calibrate the compass</string>
+	<string name="hint_get_current_heading">Get the current heading to use as a starting point</string>
+	<string name="hint_get_battery_voltage">Get the current battery voltage</string>
+	<string name="hint_manual_command">Manual command: $</string>
+	<string name="hint_run">Run</string>
+	<string name="hint_start_configuration">Remember to press the button!</string>
+	<string name="hint_load_image">Load an image</string>
+	<string name="hint_take_photo">Take a photo</string>
+	<string name="hint_test_image">Test image</string>
+
+	<string name="label_test_configuration">Test/configure:</string>
+	<string name="label_command_list">Command list (%1$d) (long press to clear from Sustainabot):</string>
+	<string name="hint_send_manual_command">Send manual_command</string>
+	<string name="label_sustainabot_output">Sustainabot output (long press to request command list):</string>
+
+	<string name="hint_test_dead_stop">Test “Dead stop” – both wheels are sent continuous pulses of widths which should move the wheels NEITHER forwards or backwards. If they do, this can be adjusted on each servo with a small screwdriver</string>
+	<string name="hint_test_forward_drive">Test “Forward drive” – this should move in a straight line forwards</string>
+	<string name="hint_test_backward_drive">Test “Backward drive” – this should move in a straight line backwards</string>
+	<string name="hint_increase_pulse_left_forward">Increase pulse width on left wheel (forward motion)</string>
+	<string name="hint_decrease_pulse_left_forward">Decrease pulse width on left wheel (forward motion)</string>
+	<string name="hint_increase_pulse_right_forward">Increase pulse width on right wheel (forward motion)</string>
+	<string name="hint_decrease_pulse_right_forward">Decrease pulse width on right wheel (forward motion)</string>
+	<string name="hint_increase_pulse_left_backward">Increase pulse width on left wheel (backward motion)</string>
+	<string name="hint_decrease_pulse_left_backward">Decrease pulse width on left wheel (backward motion)</string>
+	<string name="hint_increase_pulse_right_backward">Increase pulse width on right wheel (backward motion)</string>
+	<string name="hint_decrease_pulse_right_backward">Decrease pulse width on right wheel (backward motion)</string>
+</resources>

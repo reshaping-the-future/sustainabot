@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:focusableInTouchMode="true"
+	app:layout_behavior="@string/appbar_scrolling_view_behavior"
+	tools:context="ac.robinson.sustainabot.MainActivity"
+	tools:showIn="@layout/activity_main">
+	<!-- focusableInTouchMode is to prevent any item having focus on startup -->
+
+	<android.support.constraint.ConstraintLayout
+		android:id="@+id/connection_views"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		tools:visibility="gone">
+
+		<TextView
+			android:id="@+id/connection_hint"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:paddingTop="16dp"
+			android:text="@string/hint_connecting"
+			android:textSize="20sp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<ProgressBar
+			android:id="@+id/connection_progress"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:indeterminate="true"
+			app:layout_constraintBottom_toTopOf="@id/connection_hint"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent" />
+	</android.support.constraint.ConstraintLayout>
+
+	<android.support.constraint.ConstraintLayout
+		android:id="@+id/control_views"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:visibility="gone"
+		tools:visibility="gone">
+
+		<Switch
+			android:id="@+id/switchHeading"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:layout_marginTop="8dp"
+			android:layout_marginEnd="8dp"
+			android:text="@string/hint_use_heading"
+			app:layout_constraintEnd_toStartOf="@id/switchMode"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<Switch
+			android:id="@+id/switchMode"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:layout_marginTop="8dp"
+			android:layout_marginEnd="8dp"
+			android:text="@string/hint_build_command_list"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@id/switchHeading"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<ImageButton
+			android:id="@+id/buttonForward"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:contentDescription="@string/hint_move_sustainabot_forward"
+			android:onClick="handleClick"
+			app:layout_constraintStart_toEndOf="@id/buttonLeft"
+			app:layout_constraintTop_toBottomOf="@id/switchMode"
+			app:srcCompat="@drawable/ic_arrow_upward_blue_grey_500_36dp" />
+
+		<ImageButton
+			android:id="@+id/buttonLeft"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:layout_marginLeft="8dp"
+			android:contentDescription="@string/hint_turn_sustainabot_left"
+			android:onClick="handleClick"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/buttonForward"
+			app:srcCompat="@drawable/ic_rotate_left_blue_grey_500_36dp" />
+
+		<ToggleButton
+			android:id="@+id/toggleDropMaterial"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:checked="false"
+			app:layout_constraintBottom_toTopOf="@id/buttonBackward"
+			app:layout_constraintEnd_toStartOf="@id/buttonRight"
+			app:layout_constraintStart_toEndOf="@id/buttonLeft"
+			app:layout_constraintTop_toBottomOf="@id/buttonForward" />
+
+		<ImageButton
+			android:id="@+id/buttonRight"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:contentDescription="@string/hint_turn_sustainabot_right"
+			android:onClick="handleClick"
+			app:layout_constraintStart_toEndOf="@id/buttonForward"
+			app:layout_constraintTop_toBottomOf="@id/buttonForward"
+			app:srcCompat="@drawable/ic_rotate_right_blue_grey_500_36dp" />
+
+		<ImageButton
+			android:id="@+id/buttonBackward"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:contentDescription="@string/hint_move_sustainabot_backward"
+			android:onClick="handleClick"
+			app:layout_constraintStart_toEndOf="@id/buttonLeft"
+			app:layout_constraintTop_toBottomOf="@id/buttonLeft"
+			app:srcCompat="@drawable/ic_arrow_downward_blue_grey_500_36dp" />
+
+		<ImageButton
+			android:id="@+id/buttonCalibrateCompass"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="4dp"
+			android:layout_marginRight="4dp"
+			android:contentDescription="@string/hint_calibrate_compass"
+			android:onClick="handleClick"
+			app:layout_constraintBottom_toBottomOf="@id/labelMovementStep"
+			app:layout_constraintEnd_toStartOf="@id/labelMovementStep"
+			app:layout_constraintTop_toTopOf="@id/labelMovementStep"
+			app:srcCompat="@drawable/ic_settings_input_antenna_blue_grey_500_24dp" />
+
+		<TextView
+			android:id="@+id/labelMovementStep"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="end"
+			android:text="@string/hint_movement_step"
+			app:layout_constraintBaseline_toBaselineOf="@id/inputMovementStep"
+			app:layout_constraintEnd_toStartOf="@id/inputMovementStep" />
+
+		<EditText
+			android:id="@+id/inputMovementStep"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:layout_marginEnd="8dp"
+			android:layout_marginRight="8dp"
+			android:ems="2"
+			android:inputType="numberSigned"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/switchMode" />
+
+		<SeekBar
+			android:id="@+id/seekMovementStep"
+			style="@style/Widget.AppCompat.SeekBar.Discrete"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="4dp"
+			android:layout_marginEnd="8dp"
+			android:layout_marginRight="8dp"
+			android:max="9"
+			android:progress="0"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="@id/labelMovementStep"
+			app:layout_constraintTop_toBottomOf="@id/inputMovementStep" />
+
+		<ImageButton
+			android:id="@+id/buttonGetBatteryVoltage"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="4dp"
+			android:layout_marginRight="4dp"
+			android:contentDescription="@string/hint_get_battery_voltage"
+			android:onClick="handleClick"
+			app:layout_constraintBottom_toTopOf="@id/buttonGetCurrentHeading"
+			app:layout_constraintEnd_toStartOf="@id/labelMovementStep"
+			app:layout_constraintTop_toBottomOf="@id/buttonCalibrateCompass"
+			app:srcCompat="@drawable/ic_battery_unknown_blue_grey_500_24dp" />
+
+		<ImageButton
+			android:id="@+id/buttonGetCurrentHeading"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="4dp"
+			android:layout_marginRight="4dp"
+			android:contentDescription="@string/hint_get_current_heading"
+			android:onClick="handleClick"
+			app:layout_constraintBottom_toBottomOf="@id/seekRotationStep"
+			app:layout_constraintEnd_toStartOf="@id/labelRotationStep"
+			app:layout_constraintTop_toTopOf="@id/seekRotationStep"
+			app:srcCompat="@drawable/ic_screen_rotation_blue_grey_500_24dp" />
+
+		<TextView
+			android:id="@+id/labelRotationStep"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:gravity="end"
+			android:text="@string/hint_rotation_step"
+			app:layout_constraintBaseline_toBaselineOf="@id/inputRotationStep"
+			app:layout_constraintEnd_toStartOf="@id/inputRotationStep"
+			app:layout_constraintStart_toStartOf="@id/labelMovementStep" />
+
+		<EditText
+			android:id="@+id/inputRotationStep"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:layout_marginEnd="8dp"
+			android:layout_marginRight="8dp"
+			android:ems="2"
+			android:inputType="numberSigned"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/seekMovementStep" />
+
+		<SeekBar
+			android:id="@+id/seekRotationStep"
+			style="@style/Widget.AppCompat.SeekBar.Discrete"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="4dp"
+			android:layout_marginEnd="8dp"
+			android:layout_marginRight="8dp"
+			android:max="8"
+			android:progress="0"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="@id/labelRotationStep"
+			app:layout_constraintTop_toBottomOf="@id/inputRotationStep" />
+
+		<TextView
+			android:id="@+id/labelCommandHistory"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:layout_marginLeft="8dp"
+			android:layout_marginTop="16dp"
+			android:text="@string/label_command_list"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/buttonBackward" />
+
+		<ScrollView
+			android:id="@+id/scrollCommandHistory"
+			android:layout_width="0dp"
+			android:layout_height="72dp"
+			android:layout_marginStart="8dp"
+			android:layout_marginEnd="8dp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/labelCommandHistory">
+
+			<TextView
+				android:id="@+id/textCommandHistory"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" />
+		</ScrollView>
+
+		<Button
+			android:id="@+id/buttonSendCommands"
+			android:layout_width="wrap_content"
+			android:layout_height="0dp"
+			android:layout_marginEnd="8dp"
+			android:layout_marginRight="8dp"
+			android:onClick="handleClick"
+			android:text="@string/hint_run"
+			app:layout_constraintBottom_toBottomOf="@id/scrollCommandHistory"
+			app:layout_constraintEnd_toEndOf="@id/scrollCommandHistory" />
+
+		<android.support.constraint.ConstraintLayout
+			android:id="@+id/testingControlsLayout"
+			android:layout_width="wrap_content"
+			android:layout_height="0dp"
+			android:layout_marginEnd="8dp"
+			android:layout_marginRight="8dp"
+			android:visibility="gone"
+			app:layout_constraintBottom_toTopOf="@id/inputManualCommand"
+			app:layout_constraintEnd_toStartOf="@id/labelSustainabotOutput"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/buttonBackward"
+			tools:visibility="gone">
+
+			<!-- https://stackoverflow.com/a/43143847/1993220 -->
+			<!--<android.support.constraint.Guideline-->
+			<!--android:layout_width="wrap_content"-->
+			<!--android:layout_height="wrap_content"-->
+			<!--android:id="@+id/testButtonsGuideline"-->
+			<!--android:orientation="vertical"-->
+			<!--app:layout_constraintGuide_percent="0.5"/>-->
+
+			<TextView
+				android:id="@+id/labelTestConfigurationOptions"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="8dp"
+				android:layout_marginLeft="8dp"
+				android:layout_marginTop="16dp"
+				android:text="@string/label_test_configuration"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<ImageButton
+				android:id="@+id/buttonIncreasePulseLeftForward"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:contentDescription="@string/hint_increase_pulse_left_forward"
+				android:onClick="handleClick"
+				android:padding="6dp"
+				app:layout_constraintBottom_toTopOf="@id/buttonDecreasePulseLeftForward"
+				app:layout_constraintStart_toStartOf="@id/labelTestConfigurationOptions"
+				app:layout_constraintTop_toBottomOf="@id/labelTestConfigurationOptions"
+				app:srcCompat="@drawable/ic_add_blue_grey_500_24dp" />
+
+			<ImageButton
+				android:id="@+id/buttonDecreasePulseLeftForward"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:contentDescription="@string/hint_decrease_pulse_left_forward"
+				android:onClick="handleClick"
+				android:padding="6dp"
+				app:layout_constraintBottom_toTopOf="@id/buttonTestDeadStop"
+				app:layout_constraintStart_toStartOf="@id/buttonIncreasePulseLeftForward"
+				app:layout_constraintTop_toBottomOf="@id/buttonIncreasePulseLeftForward"
+				app:srcCompat="@drawable/ic_remove_blue_grey_500_24dp" />
+
+			<ImageButton
+				android:id="@+id/buttonTestForward"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:contentDescription="@string/hint_test_forward_drive"
+				android:onClick="handleClick"
+				android:padding="6dp"
+				app:layout_constraintBottom_toTopOf="@id/buttonTestDeadStop"
+				app:layout_constraintStart_toStartOf="@id/buttonTestDeadStop"
+				app:srcCompat="@drawable/ic_arrow_upward_blue_grey_500_36dp" />
+
+			<ImageButton
+				android:id="@+id/buttonIncreasePulseRightForward"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="8dp"
+				android:layout_marginLeft="8dp"
+				android:contentDescription="@string/hint_increase_pulse_right_forward"
+				android:onClick="handleClick"
+				android:padding="6dp"
+				app:layout_constraintStart_toEndOf="@id/buttonTestDeadStop"
+				app:layout_constraintTop_toTopOf="@id/buttonIncreasePulseLeftForward"
+				app:srcCompat="@drawable/ic_add_blue_grey_500_24dp" />
+
+			<ImageButton
+				android:id="@+id/buttonDecreasePulseRightForward"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:contentDescription="@string/hint_decrease_pulse_right_forward"
+				android:onClick="handleClick"
+				android:padding="6dp"
+				app:layout_constraintStart_toStartOf="@id/buttonIncreasePulseRightForward"
+				app:layout_constraintTop_toTopOf="@id/buttonDecreasePulseLeftForward"
+				app:srcCompat="@drawable/ic_remove_blue_grey_500_24dp" />
+
+			<ImageButton
+				android:id="@+id/buttonTestDeadStop"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="8dp"
+				android:layout_marginLeft="8dp"
+				android:contentDescription="@string/hint_test_dead_stop"
+				android:onClick="handleClick"
+				android:padding="6dp"
+				app:layout_constraintBottom_toTopOf="@id/buttonIncreasePulseLeftBackward"
+				app:layout_constraintStart_toEndOf="@id/buttonIncreasePulseLeftForward"
+				app:layout_constraintTop_toBottomOf="@id/buttonDecreasePulseLeftForward"
+				app:srcCompat="@drawable/ic_stop_blue_grey_500_36dp" />
+
+			<ImageButton
+				android:id="@+id/buttonIncreasePulseLeftBackward"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:contentDescription="@string/hint_increase_pulse_left_backward"
+				android:onClick="handleClick"
+				android:padding="6dp"
+				app:layout_constraintBottom_toTopOf="@id/buttonDecreasePulseLeftBackward"
+				app:layout_constraintStart_toStartOf="@id/buttonIncreasePulseLeftForward"
+				app:layout_constraintTop_toBottomOf="@id/buttonTestDeadStop"
+				app:srcCompat="@drawable/ic_add_blue_grey_500_24dp" />
+
+			<ImageButton
+				android:id="@+id/buttonDecreasePulseLeftBackward"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:contentDescription="@string/hint_decrease_pulse_left_backward"
+				android:onClick="handleClick"
+				android:padding="6dp"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintStart_toStartOf="@id/buttonIncreasePulseLeftForward"
+				app:layout_constraintTop_toBottomOf="@id/buttonIncreasePulseLeftBackward"
+				app:srcCompat="@drawable/ic_remove_blue_grey_500_24dp" />
+
+			<ImageButton
+				android:id="@+id/buttonTestBackward"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:contentDescription="@string/hint_test_backward_drive"
+				android:onClick="handleClick"
+				android:padding="6dp"
+				app:layout_constraintStart_toStartOf="@id/buttonTestDeadStop"
+				app:layout_constraintTop_toBottomOf="@id/buttonTestDeadStop"
+				app:srcCompat="@drawable/ic_arrow_downward_blue_grey_500_36dp" />
+
+			<ImageButton
+				android:id="@+id/buttonIncreasePulseRightBackward"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:contentDescription="@string/hint_increase_pulse_right_backward"
+				android:onClick="handleClick"
+				android:padding="6dp"
+				app:layout_constraintStart_toStartOf="@id/buttonIncreasePulseRightForward"
+				app:layout_constraintTop_toTopOf="@id/buttonIncreasePulseLeftBackward"
+				app:srcCompat="@drawable/ic_add_blue_grey_500_24dp" />
+
+			<ImageButton
+				android:id="@+id/buttonDecreasePulseRightBackward"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:contentDescription="@string/hint_decrease_pulse_right_backward"
+				android:onClick="handleClick"
+				android:padding="6dp"
+				app:layout_constraintStart_toStartOf="@id/buttonIncreasePulseRightBackward"
+				app:layout_constraintTop_toTopOf="@id/buttonDecreasePulseLeftBackward"
+				app:srcCompat="@drawable/ic_remove_blue_grey_500_24dp" />
+		</android.support.constraint.ConstraintLayout>
+
+		<TextView
+			android:id="@+id/labelSustainabotOutput"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:layout_marginLeft="8dp"
+			android:layout_marginTop="16dp"
+			android:layout_marginEnd="8dp"
+			android:layout_marginRight="8dp"
+			android:text="@string/label_sustainabot_output"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@id/testingControlsLayout"
+			app:layout_constraintTop_toBottomOf="@id/scrollCommandHistory" />
+
+		<ScrollView
+			android:id="@+id/scrollSustainabotOutput"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:layout_marginEnd="8dp"
+			android:layout_marginRight="8dp"
+			app:layout_constraintBottom_toTopOf="@id/buttonManualCommand"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="@id/labelSustainabotOutput"
+			app:layout_constraintTop_toBottomOf="@id/labelSustainabotOutput">
+
+			<TextView
+				android:id="@+id/textSustainabotOutput"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" />
+
+		</ScrollView>
+
+		<TextView
+			android:id="@+id/labelManualCommand"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:layout_marginLeft="8dp"
+			android:text="@string/hint_manual_command"
+			app:layout_constraintBaseline_toBaselineOf="@id/inputManualCommand"
+			app:layout_constraintStart_toStartOf="parent" />
+
+		<EditText
+			android:id="@+id/inputManualCommand"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:ems="3"
+			android:inputType="textCapCharacters|textNoSuggestions"
+			app:layout_constraintBottom_toBottomOf="@id/buttonManualCommand"
+			app:layout_constraintStart_toEndOf="@id/labelManualCommand" />
+
+		<ImageButton
+			android:id="@+id/buttonManualCommand"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:contentDescription="@string/hint_send_manual_command"
+			android:onClick="handleClick"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toEndOf="@id/inputManualCommand"
+			app:srcCompat="@drawable/ic_play_arrow_blue_grey_500_24dp" />
+
+	</android.support.constraint.ConstraintLayout>
+
+	<android.support.constraint.ConstraintLayout
+		android:id="@+id/user_views"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@android:color/white"
+		android:visibility="gone"
+		tools:visibility="visible">
+
+		<TextView
+			android:id="@+id/labelImageSizeSmall"
+			android:layout_width="wrap_content"
+			android:layout_height="0dp"
+			android:layout_marginStart="10dp"
+			android:layout_marginLeft="10dp"
+			android:gravity="center_vertical"
+			android:text="@string/size_small"
+			android:textSize="24sp"
+			app:layout_constraintBottom_toTopOf="@id/buttonLoadImage"
+			app:layout_constraintEnd_toStartOf="@id/seekImageSize"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<SeekBar
+			android:id="@+id/seekImageSize"
+			style="@style/Widget.AppCompat.SeekBar.Discrete"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_margin="20dp"
+			android:max="3"
+			android:progress="0"
+			app:layout_constraintBottom_toTopOf="@id/buttonLoadImage"
+			app:layout_constraintEnd_toStartOf="@id/labelImageSizeLarge"
+			app:layout_constraintStart_toEndOf="@id/labelImageSizeSmall"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<TextView
+			android:id="@+id/labelImageSizeLarge"
+			android:layout_width="wrap_content"
+			android:layout_height="0dp"
+			android:layout_marginEnd="10dp"
+			android:layout_marginRight="10dp"
+			android:gravity="center_vertical"
+			android:text="@string/size_large"
+			android:textSize="24sp"
+			app:layout_constraintBottom_toTopOf="@id/buttonLoadImage"
+			app:layout_constraintEnd_toStartOf="@id/switchUseCorrection"
+			app:layout_constraintStart_toEndOf="@id/seekImageSize"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<Switch
+			android:id="@+id/switchUseCorrection"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:layout_marginTop="8dp"
+			android:layout_marginEnd="8dp"
+			android:text="@string/hint_use_offset"
+			app:layout_constraintBottom_toTopOf="@id/buttonLoadImage"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@id/labelImageSizeLarge"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<ImageButton
+			android:id="@+id/buttonLoadImage"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:contentDescription="@string/hint_load_image"
+			android:onClick="handleClick"
+			android:src="@drawable/ic_photo_blue_grey_500_48dp"
+			app:layout_constraintBottom_toTopOf="@id/buttonTakePicture"
+			app:layout_constraintTop_toBottomOf="@id/seekImageSize" />
+
+		<ImageButton
+			android:id="@+id/buttonTakePicture"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:contentDescription="@string/hint_take_photo"
+			android:onClick="handleClick"
+			android:src="@drawable/ic_text_fields_blue_grey_500_48dp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/buttonLoadImage" />
+
+		<ImageView
+			android:id="@+id/testImage"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:contentDescription="@string/hint_test_image"
+			android:visibility="gone" />
+	</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
