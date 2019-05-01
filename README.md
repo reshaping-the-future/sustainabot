@@ -10,7 +10,7 @@ Sustainabot is made up of several separate components, and each one is documente
 
 * [Device body](sustainabot-device/body)
 * [Electronics and microcontroller code](sustainabot-device/controller)
-* [Android controller app](sustainabot-app)
+* [Android controller app](sustainabot-android)
 
 ## License
 Apache 2.0
