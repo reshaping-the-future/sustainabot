@@ -19,7 +19,7 @@ To deploy the prebuilt file using the MPLAB IDE:
 7. Power on the Sustainabot, then connect the PICkit 3 to your computer
 8. Click `Make and Program Device` in the MPLAB IDE
 
-Once you have programmed your device, you can disconnect the programming cable and use the [android app](../../android) to control your Sustainabot.
+Once you have programmed your device, you can disconnect the programming cable and use the [android app](../../sustainabot-android) to control your Sustainabot.
 
 ## License
 Apache 2.0
