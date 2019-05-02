@@ -3,6 +3,12 @@ Sustainabot is controlled using a custom-made circuit board, which runs three mi
 
 This repository provides [circuit diagrams](gerber), a [bill of materials](bill-of-materials.xlsx) and [parts coordinates list](parts-list-coordinates.xlsx), a [list of commands](command-list.txt), and [general hardware documentation](sustainabot-building.pdf).
 
+You will also need the following (or similar), in addition to the circuit board:
+* Three 700:1 micro planetary motors ([example](https://coolcomponents.co.uk/products/700-1-sub-micro-plastic-planetary-gearmotor))
+* A Bluetooth HC-05 module
+* A Lithium-polymer battery
+* Optional: Two extra 100 kOhm resistors for the battery monitor feature
+
 For simplicity, we have provided both the [source](sustainabot.bas) and [prebuilt](sustainabot.hex) embedded code. In order to deploy the prebuilt code, you will need a debugger (e.g., [PICkit 3](https://www.microchip.com/DevelopmentTools/ProductDetails/pg164130)) and the [MPLAB IDE](https://www.microchip.com/mplab/mplab-x-ide).
 
 To deploy the prebuilt file using the MPLAB IDE:
