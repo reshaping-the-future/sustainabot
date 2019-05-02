@@ -1,0 +1,65 @@
+Upon switch-on:
+	Variables are initialised
+	Wheel outputs to control H-bridges are set off/low 
+	Duty cycle for the forward and backward motion PWMs are set to EEPROM stored values
+	Magnetometer is initialised
+	Green LED is switched on
+	An array is filled with a trigonometric look-up table
+	Listens for user-defined commands until “Go” command received
+	Execute list of commands
+	Check battery voltage (if 2-resistor battery mod fitted)
+	Return to “Listens for user-defined commands”
+
+Commands are sent from a phone or PC via Bluetooth/serial link as a series of 5 characters, each beginning with $, followed by the command character, and then 3 numerical digits i.e. $F030 
+
+List of available commands (### values not used, xxx values are used):
+
+Immediate commands (not added to the command list)
+	J###		Display this list of commands
+	L###		List commands currently stored in EEPROM
+	C###		Clear all stored commands
+	G###		Execute all stored commands
+	0xxx (zero)	Perform a compass calibration for xxx turn units (calculate magnetometer offsets)
+	Z###		Request current heading
+	I###		Battery voltage request
+	K###		Continuously seek random headings (until reed switch is triggered)
+	t###		List wheel calibration and Drop/Stop values
+	qxxx		Left wheel Forward set to xxx (duty cycle – 100 to 255)
+	wxxx		Left wheel Backward set to xxx (duty cycle – 100 to 255)
+	rxxx		Right wheel Forward set to xxx (duty cycle – 100 to 255)
+	exxx		Right wheel Backward set to xxx (duty cycle – 100 to 255)
+	Vxxx		Turning duration per unit (for Left/Right) to xxx
+	uxxx		Turning duration per unit (for Heading) to xxx
+
+Stored/sequence commands
+	Fxxx		Forward by xxx units
+	Bxxx		Backward by xxx units
+	Oxxx		Left turn by xxx units
+	Pxxx		Right turn by xxx units
+	Hxxx		Turn to heading xxx degrees (0 – 255, not 0 – 359)
+	axxx		Left wheel Forward set xxx (temporary; allow differential wheel speeds)
+	sxxx		Left wheel Backward set xxx (temporary; allow differential wheel speeds) 
+	dxxx		Right wheel Forward set xxx (temporary; allow differential wheel speeds)
+	fxxx		Right wheel Backward set xxx (temporary; allow differential wheel speeds)
+	gxxx		Reset forward/backward correction to stored values (make forward straight again) 
+	D###		Start drop (uses chute open time defined by $Txxx)
+	S###		Stop drop  (uses chute close time defined by $Sxxx)
+	Txxx 		Chute open set to xxx (motor engaged for xxx time units)
+	Uxxx 		Chute close set to xxx (motor engaged for xxx time units – likely longer than $Txxx) 
+	Qxxx 		Perform Lane change (non-heading version) xxx = 1 for jitter 
+	Rxxx 		Perform Lane change (Heading version) xxx = 1 for jitter
+	4xxx 		Lane change var 1 set to xxx how much to initially move forward
+	5xxx 		Lane change var 2 set to xxx how much to turn left
+	6xxx 		Lane change var 3 set to xxx how much to move forward
+	7xxx 		Lane change var 4 set to xxx how much to finally turn right
+
+	@xxx 		Draw dots with xxx = number of dots to draw
+	1xxx 		Draw dot var 1 set to xxx how much to initially move forward
+	2xxx 		Draw dot var 2 set to xxx how much to move forward, chute open
+	3xxx 		Draw dot var 3 set to xxx how much to initially move forward, chute closed
+	8xxx 		Draw dot left/right correction (100+/-) after $9xxx dots, perform a left/right turn
+	9xxx 		Draw dots, turn correction dot counter, before performing a turn correction 
+
+	Ixxx 		Jitter strength set to xxx (How much the Sustainabot turns left/right when using Jitter)
+	Exxx 		Jitter
+	pxxx 		Pause (xxx * 50) milliseconds

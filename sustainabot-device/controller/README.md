@@ -1,7 +1,7 @@
 # Sustainabot controller
 Sustainabot is controlled using a custom-made circuit board, which runs three micro planetary-drive geared motors and a Bluetooth module, provides magnetometer readings from its onboard sensor, and handles battery charging.
 
-This repository provides [circuit diagrams](), a [bill of materials](), a [block connectivity illustration](), [flow diagrams](), [command lists](), and an [implementation description]().
+This repository provides [circuit diagrams](gerber), a [bill of materials](bill-of-materials.xlsx) and [parts coordinates list](parts-list-coordinates.xlsx), a [list of commands](command-list.txt), and [general hardware documentation](sustainabot-building.pdf).
 
 For simplicity, we have provided both the [source](sustainabot.bas) and [prebuilt](sustainabot.hex) embedded code. In order to deploy the prebuilt code, you will need a debugger (e.g., [PICkit 3](https://www.microchip.com/DevelopmentTools/ProductDetails/pg164130)) and the [MPLAB IDE](https://www.microchip.com/mplab/mplab-x-ide).
 
