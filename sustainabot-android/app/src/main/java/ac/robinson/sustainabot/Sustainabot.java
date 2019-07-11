@@ -1,6 +1,6 @@
 package ac.robinson.sustainabot;
 
-public class Sustainabot {
+class Sustainabot {
 	/* -- command list --
 
 	Gxxx Execute all stored commands
@@ -10,13 +10,14 @@ public class Sustainabot {
 	0xxx Compass calibration for xxx
 	Z000 Get current heading
 	ixxx Get battery voltage
-	jxxx List all commands
+	jxxx List all available commands (i.e., this list)
+	Kxxx Continuously seek random headings (until reed switch is activated)
 
-	txxx List Wheel calib and Drop/Stop vals
-	qxxx Left wheel Fwd set xxx
-	wxxx Left wheel Bwd set xxx
-	rxxx Right wheel Fwd set xxx
-	exxx Right wheel Bwd set xxx
+	txxx List saved wheel calib and Drop/Stop vals
+	qxxx Left wheel saved Fwd correction set xxx
+	wxxx Left wheel saved Bwd correction set xxx
+	rxxx Right wheel saved Fwd correction set xxx
+	exxx Right wheel saved Bwd correction set xxx
 
 	Vxxx Turning duration per unit set xxx (for Left/Right)
 	uxxx Turning duration per unit set xxx (for Heading)
@@ -26,6 +27,12 @@ public class Sustainabot {
 	Oxxx Left turn by xxx
 	Pxxx Right turn by xxx
 	Hxxx Turn heading xxx
+
+	axxx Left wheel temporary Fwd correction set xxx
+	sxxx Left wheel temporary Bwd correction set xxx
+	dxxx Right wheel temporary Fwd correction set xxx
+	fxxx Right wheel temporary Bwd correction set xxx
+	gxxx Reset forward/backward correction to stored (i.e., q/w/r/e) values
 
 	Txxx Chute open set xxx
 	Uxxx Chute close set xxx
@@ -42,11 +49,13 @@ public class Sustainabot {
 	1xxx Draw dot var 1 set
 	2xxx Draw dot var 2 set
 	3xxx Draw dot var 2 set
-	8xxx Draw dot var 4 set
+	8xxx Draw dot left/right correction (100+/-)
+	9xxx After X dots, perform $8xxx correction
 	@xxx Draw xxx dots
 
 	Ixxx Jitter strength xxx set
 	Exxx Jitter xxx times
+	pxxx Pause (xxx * 50) milliseconds
 
 	*/
 
@@ -112,12 +121,10 @@ public class Sustainabot {
 		ConfigDropCorrectionInterval,
 		DrawDot,
 
+		/* tweaks to movement - shake the salt container or pause */
 		ConfigSetShakeTime,
 		ShakeSalt,
-	}
-
-	public enum StoredImage {
-		Hi, CHI
+		Pause
 	}
 
 	static String getCommandString(Sustainabot.Command command) {
@@ -138,7 +145,7 @@ public class Sustainabot {
 			case ListAllCommands:
 				return "j"; // prints all of the device's available command characters
 			case TestMagnetometerSeek:
-				return "k"; // continuously seeks random headings until stopped via magnet
+				return "K"; // continuously seeks random headings until stopped via magnet
 
 			case ConfigListWheelCalibrationValues:
 				return "t";
@@ -218,6 +225,8 @@ public class Sustainabot {
 				return "I";
 			case ShakeSalt:
 				return "E"; // 0 = don't return to previous heading; 1 = do
+			case Pause:
+				return "p"; // multiple of 50ms
 		}
 
 		// TODO: is there anything better we can do without checking return value each time?
